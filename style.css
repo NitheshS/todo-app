@@ -1,0 +1,398 @@
+:root {
+  --bg: #0f1115;
+  --card: #151821;
+  --elev: #1a1f2b;
+  --text: #e8ecf1;
+  --muted: #9aa5b1;
+  --brand: #0d6efd;
+  --ok: #2ecc71;
+  --warn: #f39c12;
+  --danger: #e74c3c;
+  --chip: #2a2f3a;
+  --highlight: #222835;
+  --border: #2b3242;
+}
+
+:root.light {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --elev: #f1f4f8;
+  --text: #1d2330;
+  --muted: #5b677a;
+  --brand: #0d6efd;
+  --ok: #1e8e3e;
+  --warn: #9c6a00;
+  --danger: #b71c1c;
+  --chip: #e7ecf5;
+  --highlight: #edf0f7;
+  --border: #d6dbe6;
+}
+
+/* Fix: add selector (*) */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1 {
+  margin: 8px 0;
+  font-size: 22px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--border);
+  position: relative;
+  transition: 0.2s;
+}
+
+.slider::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: var(--card);
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: 0.2s;
+}
+
+.switch input:checked + .slider::after {
+  left: 23px;
+}
+
+.switch-label {
+  font-size: 18px;
+}
+
+.badge {
+  background: var(--danger);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  padding: 0 6px;
+  margin-left: -6px;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ghost:hover {
+  background: var(--highlight);
+}
+
+.quickadd {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.quickadd input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+
+.quickadd button {
+  padding: 10px 14px;
+  border: none;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.controls .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.chip {
+  background: var(--chip);
+  border: none;
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.row input,
+.row select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card .title input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.card .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tag {
+  background: var(--highlight);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.badge-prio-1 {
+  background: #d0e8d7;
+  color: #154c2e;
+}
+
+/* light variants handled by theme root */
+.badge-prio-2 {
+  background: #ffeccb;
+  color: #7a4b00;
+}
+
+.badge-prio-3 {
+  background: #ffd8d6;
+  color: #7a1313;
+}
+
+.actions-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actions-row button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--elev);
+  color: var(--text);
+}
+
+.actions-row button:hover {
+  background: var(--highlight);
+}
+
+.subtasks {
+  padding-left: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.draggable {
+  cursor: grab;
+}
+
+.overdue {
+  color: var(--danger);
+}
+
+.dueSoon {
+  color: var(--warn);
+}
+
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.column {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.dropzone {
+  min-height: 160px;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropzone.dragover {
+  outline: 2px dashed var(--brand);
+  outline-offset: 6px;
+}
+
+.calendar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 260px;
+}
+
+.calendar .grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar .cell {
+  background: var(--elev);
+  border-radius: 8px;
+  padding: 8px;
+  min-height: 80px;
+}
+
+.calendar .cell .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--brand);
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.stats {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress {
+  height: 10px;
+  background: var(--elev);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#goalProgress {
+  height: 100%;
+  width: 0%;
+  background: var(--ok);
+  transition: width 0.2s;
+}
+
+dialog {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .kanban {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar h1 {
+    font-size: 18px;
+  }
+
+  .quickadd input {
+    font-size: 16px;
+  }
+  /* helps mobile keyboard */
+}

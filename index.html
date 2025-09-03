@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pro To‑Do (PWA)</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#0d6efd" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <h1 aria-label="App title">Pro To‑Do</h1>
+        <div class="actions">
+          <button
+            id="installBtn"
+            class="ghost"
+            aria-label="Install app"
+            title="Install"
+          >
+            ⬇️
+          </button>
+          <button
+            id="inboxBtn"
+            class="ghost"
+            aria-label="Notifications inbox"
+            title="Notifications"
+          >
+            🔔<span id="inboxBadge" class="badge" aria-hidden="true"></span>
+          </button>
+          <label class="switch" title="Theme">
+            <input type="checkbox" id="themeToggle" />
+            <span class="slider" aria-hidden="true"></span>
+            <span class="switch-label" id="themeLabel">🌞</span>
+          </label>
+        </div>
+      </header>
+
+      <section class="quickadd" aria-label="Quick add task">
+        <input
+          id="quickAdd"
+          type="text"
+          placeholder="Quick add: “Pay rent tomorrow 9am , Buy stamps”"
+          aria-label="Quick add input"
+        />
+        <button id="addBtn" aria-label="Add task">Add</button>
+      </section>
+
+      <section class="controls" aria-label="Filters and search">
+        <div class="chips">
+          <button class="chip" data-filter="all" aria-pressed="true">
+            All
+          </button>
+          <button class="chip" data-filter="pending">Pending</button>
+          <button class="chip" data-filter="doing">Doing</button>
+          <button class="chip" data-filter="completed">Completed</button>
+          <button class="chip" data-filter="today">Today</button>
+          <button class="chip" data-filter="overdue">Overdue</button>
+          <button class="chip" data-filter="scheduled">Scheduled</button>
+          <button class="chip" data-filter="archived">Archived</button>
+        </div>
+        <div class="row">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search text or #tag"
+            aria-label="Search tasks"
+          />
+          <select id="sortSelect" aria-label="Sort tasks">
+            <option value="order">Custom order</option>
+            <option value="dueAsc">Due date ↑</option>
+            <option value="dueDesc">Due date ↓</option>
+            <option value="priorityDesc">Priority</option>
+            <option value="createdDesc">Recently added</option>
+          </select>
+          <button
+            id="kanbanToggle"
+            class="ghost"
+            aria-pressed="false"
+            title="Kanban view"
+          >
+            🧩
+          </button>
+          <button
+            id="calendarToggle"
+            class="ghost"
+            aria-pressed="false"
+            title="Calendar view"
+          >
+            📅
+          </button>
+          <button
+            id="statsToggle"
+            class="ghost"
+            aria-pressed="false"
+            title="Stats"
+          >
+            📈
+          </button>
+          <button
+            id="settingsToggle"
+            class="ghost"
+            aria-pressed="false"
+            title="Settings"
+          >
+            ⚙️
+          </button>
+        </div>
+      </section>
+
+      <main>
+        <section id="taskSection" aria-label="Task list">
+          <ul id="taskList" class="list" role="list"></ul>
+        </section>
+
+        <section id="kanbanSection" class="hidden" aria-label="Kanban board">
+          <div class="kanban">
+            <div class="column" data-col="pending" aria-label="Pending">
+              <h3>Pending</h3>
+              <ul class="dropzone" id="col-pending"></ul>
+            </div>
+            <div class="column" data-col="doing" aria-label="Doing">
+              <h3>Doing</h3>
+              <ul class="dropzone" id="col-doing"></ul>
+            </div>
+            <div class="column" data-col="completed" aria-label="Completed">
+              <h3>Completed</h3>
+              <ul class="dropzone" id="col-completed"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="calendarSection" class="hidden" aria-label="Calendar">
+          <div id="calendar" class="calendar"></div>
+        </section>
+
+        <section id="statsSection" class="hidden" aria-label="Statistics">
+          <div class="stats">
+            <div>
+              <strong>Daily goal:</strong> <span id="goalCount">5</span>
+            </div>
+            <div>
+              <strong>Completed today:</strong>
+              <span id="completedToday">0</span>
+            </div>
+            <div class="progress"><div id="goalProgress"></div></div>
+            <div>
+              <strong>Streak:</strong> <span id="streakDays">0</span> days
+            </div>
+          </div>
+        </section>
+
+        <section id="settingsSection" class="hidden" aria-label="Settings">
+          <label
+            ><input type="checkbox" id="soundToggle" /> Enable reminder
+            sound</label
+          >
+          <label
+            ><input type="checkbox" id="autoThemeToggle" /> Follow system
+            theme</label
+          >
+          <label
+            >Daily goal
+            <input type="number" id="dailyGoal" min="1" max="50" value="5"
+          /></label>
+          <button id="exportBtn">Export JSON</button>
+          <input id="importFile" type="file" accept="application/json" />
+        </section>
+      </main>
+
+      <dialog id="editDialog" aria-label="Edit task dialog">
+        <form method="dialog">
+          <h3>Edit Task</h3>
+          <input id="editText" />
+          <textarea id="editNotes" placeholder="Notes"></textarea>
+          <input id="editDue" type="datetime-local" />
+          <input id="editRemind" type="datetime-local" />
+          <input id="editTags" placeholder="#home #work" />
+          <select id="editPriority">
+            <option value="0">None</option>
+            <option value="1">Low</option>
+            <option value="2">Medium</option>
+            <option value="3">High</option>
+          </select>
+          <label><input id="editDoing" type="checkbox" /> Mark as doing</label>
+          <label><input id="editCompleted" type="checkbox" /> Completed</label>
+          <label
+            >Repeat
+            <select id="editRepeat">
+              <option value="">None</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </label>
+          <div id="subtasksContainer"></div>
+          <button id="addSubtaskBtn" type="button">Add subtask</button>
+          <menu>
+            <button value="cancel">Cancel</button>
+            <button id="saveEditBtn" value="default">Save</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <dialog id="inboxDialog" aria-label="Notifications inbox">
+        <h3>Reminders</h3>
+        <ul id="inboxList"></ul>
+        <menu
+          ><button id="clearInbox">Clear</button
+          ><button id="closeInbox">Close</button></menu
+        >
+      </dialog>
+    </div>
+    <audio id="ding" preload="auto" src="ding.mp3"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
